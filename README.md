@@ -236,8 +236,6 @@ This project is licensed under the MIT License - see [LICENSE](./LICENSE) file f
 ## 🙏 Acknowledgments
 
 - Design inspiration from modern portfolio templates
-- Next.js and React communities
-
 ---
 
 **Note:** This portfolio uses content from Utkarsh Singh's résumé. All dates, positions, and descriptions are accurate as of the last update.
