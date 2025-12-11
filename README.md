@@ -237,7 +237,6 @@ This project is licensed under the MIT License - see [LICENSE](./LICENSE) file f
 
 - Design inspiration from modern portfolio templates
 - Next.js and React communities
-- Tailwind CSS for the utility-first CSS framework
 
 ---
 
