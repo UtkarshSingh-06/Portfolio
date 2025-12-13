@@ -233,7 +233,4 @@ This project is licensed under the MIT License - see [LICENSE](./LICENSE) file f
 - LinkedIn: [linkedin.com/in/utkarsh-singh06](https://www.linkedin.com/in/utkarsh-singh06)
 - GitHub: [github.com/UtkarshSingh-06](https://github.com/UtkarshSingh-06)
 
-## 🙏 Acknowledgments
-
-
 **Note:** This portfolio uses content from Utkarsh Singh's résumé. All dates, positions, and descriptions are accurate as of the last update.
