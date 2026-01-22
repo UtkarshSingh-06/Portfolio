@@ -4,36 +4,27 @@ import { motion } from 'framer-motion'
 
 const experiences = [
   {
-    title: 'Full Stack Developer',
-    company: 'Tech Company',
-    period: '2023 - Present',
-    description: 'Developed and maintained scalable web applications using React and Node.js. Implemented AI features using TensorFlow and PyTorch.',
+    title: 'Joint Head of Curations',
+    company: 'IEEE RAS, Manipal University Jaipur',
+    period: 'Sept 2024 – May 2025',
+    location: 'Jaipur, India',
+    description: 'Led curation efforts for technical events and workshops, collaborating with cross-functional teams to organize large-scale events and manage content strategy.',
     achievements: [
-      'Led development of AI-powered recommendation system',
-      'Improved application performance by 40%',
-      'Mentored junior developers'
+      'Led curation efforts for technical events and workshops',
+      'Collaborated with cross-functional teams to organize large-scale events',
+      'Managed content strategy and technical documentation'
     ]
   },
   {
-    title: 'Cloud Engineering Intern',
-    company: 'Cloud Solutions Inc.',
-    period: '2022 - 2023',
-    description: 'Worked on cloud infrastructure projects using AWS. Designed and implemented serverless architectures.',
+    title: 'Head of Sponsorships',
+    company: 'CampusAdda, Manipal University Jaipur',
+    period: 'Sept 2024 – May 2025',
+    location: 'Jaipur, India',
+    description: 'Managed sponsorship relationships and partnerships, developing proposals and coordinating with external stakeholders to secure funding for events.',
     achievements: [
-      'Migrated legacy systems to AWS',
-      'Reduced infrastructure costs by 30%',
-      'Implemented CI/CD pipelines'
-    ]
-  },
-  {
-    title: 'Software Development Intern',
-    company: 'StartupXYZ',
-    period: '2021 - 2022',
-    description: 'Built frontend components and RESTful APIs. Collaborated with cross-functional teams on product features.',
-    achievements: [
-      'Developed responsive UI components',
-      'Created RESTful APIs with Node.js',
-      'Participated in agile development process'
+      'Managed sponsorship relationships and partnerships',
+      'Developed sponsorship proposals and presentations',
+      'Coordinated with external stakeholders and vendors'
     ]
   },
 ]
@@ -74,9 +65,16 @@ export default function Experience() {
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                       {exp.title}
                     </h3>
-                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-                      {exp.period}
-                    </span>
+                    <div className="flex flex-col md:items-end gap-1">
+                      <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                        {exp.period}
+                      </span>
+                      {exp.location && (
+                        <span className="text-xs text-gray-500 dark:text-gray-500">
+                          {exp.location}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <p className="text-gray-700 dark:text-gray-300 font-medium mb-3">
                     {exp.company}
