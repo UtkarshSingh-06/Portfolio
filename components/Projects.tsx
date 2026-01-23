@@ -66,7 +66,7 @@ export default function Projects() {
                 href={`/projects/${project.slug}`}
                 className="block h-full"
               >
-                <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 h-full flex flex-col cursor-pointer">
+                <div className="bg-white dark:bg-gray-800 rounded-xl border border-amber-200 dark:border-gray-700 overflow-hidden hover:border-amber-300 dark:hover:border-gray-600 transition-all duration-300 h-full flex flex-col cursor-pointer shadow-sm hover:shadow-md">
                 {/* Project Screenshot/Image */}
                 <div className="relative w-full h-56 bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-900 overflow-hidden">
                   {/* Placeholder for actual screenshot - replace with Image component when you have images */}
@@ -108,7 +108,7 @@ export default function Projects() {
                       {project.technologies.slice(0, 3).map((tech) => (
                         <div
                           key={tech}
-                          className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-xs text-gray-700 dark:text-gray-300"
+                          className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 dark:bg-gray-700 rounded-md text-xs text-gray-700 dark:text-gray-300 border border-amber-200 dark:border-gray-600"
                         >
                           {techIcons[tech] && (
                             <span className="text-xs leading-none">{techIcons[tech]}</span>
@@ -125,7 +125,7 @@ export default function Projects() {
                   </div>
                   
                   {/* Status and View Details */}
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
+                  <div className="flex items-center justify-between pt-4 border-t border-amber-200 dark:border-gray-700 mt-auto">
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${
                         project.statusColor === 'green' ? 'bg-green-500' : 'bg-gray-400'
