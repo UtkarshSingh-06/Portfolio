@@ -41,7 +41,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300"
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-amber-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-gray-600 transition-all duration-300 shadow-sm"
             >
               <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
                 {category}
@@ -57,7 +57,7 @@ export default function Skills() {
                       viewport={{ once: true }}
                       transition={{ duration: 0.3, delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
                       whileHover={{ scale: 1.1 }}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium"
+                      className="px-3 py-1 bg-amber-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium border border-amber-200 dark:border-gray-600"
                     >
                       {skill.name}
                     </motion.span>
