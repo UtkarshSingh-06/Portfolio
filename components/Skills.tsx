@@ -3,18 +3,42 @@
 import { motion } from 'framer-motion'
 
 const skills = [
-  { name: 'React', category: 'Frontend' },
-  { name: 'Next.js', category: 'Frontend' },
-  { name: 'TypeScript', category: 'Frontend' },
-  { name: 'Node.js', category: 'Backend' },
-  { name: 'Python', category: 'Backend' },
-  { name: 'TensorFlow', category: 'AI/ML' },
-  { name: 'PyTorch', category: 'AI/ML' },
-  { name: 'AWS', category: 'Cloud' },
-  { name: 'Docker', category: 'DevOps' },
-  { name: 'MongoDB', category: 'Database' },
-  { name: 'PostgreSQL', category: 'Database' },
+  // Languages
+  { name: 'JavaScript', category: 'Languages' },
+  { name: 'TypeScript', category: 'Languages' },
+  { name: 'Python', category: 'Languages' },
+  { name: 'C', category: 'Languages' },
+  { name: 'C++', category: 'Languages' },
+  { name: 'Java', category: 'Languages' },
+  { name: 'HTML', category: 'Languages' },
+  { name: 'CSS', category: 'Languages' },
+  { name: 'SQL', category: 'Languages' },
+  // MERN Stack
+  { name: 'React', category: 'MERN Stack' },
+  { name: 'Next.js', category: 'MERN Stack' },
+  { name: 'JavaScript', category: 'MERN Stack' },
+  { name: 'TypeScript', category: 'MERN Stack' },
+  { name: 'Node.js', category: 'MERN Stack' },
+  { name: 'Express.js', category: 'MERN Stack' },
+  { name: 'MongoDB', category: 'MERN Stack' },
+  // Cloud & DevOps
+  { name: 'AWS', category: 'Cloud & DevOps' },
+  { name: 'Microsoft Azure', category: 'Cloud & DevOps' },
+  { name: 'Kubernetes', category: 'Cloud & DevOps' },
+  { name: 'Docker', category: 'Cloud & DevOps' },
+  { name: 'Ansible', category: 'Cloud & DevOps' },
+  { name: 'Terraform', category: 'Cloud & DevOps' },
+  { name: 'Linux', category: 'Cloud & DevOps' },
+  { name: 'CI/CD', category: 'Cloud & DevOps' },
+  { name: 'Deployment', category: 'Cloud & DevOps' },
+  // Databases
+  { name: 'MongoDB', category: 'Databases' },
+  { name: 'PostgreSQL', category: 'Databases' },
+  { name: 'MySQL', category: 'Databases' },
+  // Tools
   { name: 'Git', category: 'Tools' },
+  { name: 'GitHub', category: 'Tools' },
+  { name: 'VS Code', category: 'Tools' },
 ]
 
 export default function Skills() {
