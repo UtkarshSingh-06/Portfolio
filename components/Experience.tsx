@@ -45,7 +45,7 @@ export default function Experience() {
         
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-700"></div>
+          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-amber-300 dark:bg-gray-700"></div>
           
           <div className="space-y-12">
             {experiences.map((exp, index) => (
@@ -60,7 +60,7 @@ export default function Experience() {
                 {/* Timeline dot */}
                 <div className="absolute left-6 top-2 w-4 h-4 bg-gray-900 dark:bg-gray-100 rounded-full border-4 border-white dark:border-gray-900"></div>
                 
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-amber-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-gray-600 transition-all duration-300 shadow-sm">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                       {exp.title}
