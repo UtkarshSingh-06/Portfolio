@@ -88,9 +88,7 @@ export default function Hero() {
               className="flex flex-wrap gap-4 pt-2"
             >
               <Link
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/resume"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-gray-700 text-white dark:text-gray-200 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-all duration-200 group shadow-md"
               >
                 <svg
