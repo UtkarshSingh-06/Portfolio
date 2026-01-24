@@ -1,4 +1,7 @@
+'use client'
+
 import Navbar from '@/components/Navbar'
+import CommandPalette from '@/components/CommandPalette'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Skills from '@/components/Skills'
@@ -9,15 +12,18 @@ import Contact from '@/components/Contact'
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Experience />
-      <GitHubActivity />
-      <Contact />
-    </main>
+    <>
+      <CommandPalette />
+      <main className="min-h-screen">
+        <Navbar />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <GitHubActivity />
+        <Contact />
+      </main>
+    </>
   )
 }
