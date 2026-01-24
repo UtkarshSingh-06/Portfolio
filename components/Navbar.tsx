@@ -32,35 +32,36 @@ export default function Navbar() {
           <div className="flex items-center gap-6">
             <div className="hidden md:flex gap-6">
               <Link
-                href="#about"
+                href="/"
                 className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
-                About
+                Home
               </Link>
               <Link
-                href="#skills"
+                href="/resume"
                 className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
-                Skills
+                Resume
               </Link>
               <Link
-                href="#projects"
+                href="/#projects"
                 className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
                 Projects
               </Link>
-              <Link
-                href="#experience"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              <button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('openCommandPalette'))
+                }}
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1.5"
+                title="Open command palette (Ctrl+K)"
               >
-                Experience
-              </Link>
-              <Link
-                href="#contact"
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-              >
-                Contact
-              </Link>
+                <span>Search</span>
+                <kbd className="hidden lg:inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded">
+                  <span>Ctrl</span>
+                  <span>K</span>
+                </kbd>
+              </button>
             </div>
             <button
               onClick={toggleTheme}
