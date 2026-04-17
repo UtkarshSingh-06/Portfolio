@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Modern Portfolio Website
 
-## Getting Started
+A fully responsive, data-driven portfolio built with Next.js, Tailwind CSS, and Framer Motion.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router + TypeScript)
+- Tailwind CSS
+- Framer Motion
+- next-themes (dark/light mode)
+- EmailJS (contact form)
+- Vercel Analytics
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configure Personal Content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All editable personal content lives in `src/data/site.ts`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Update these sections:
 
-## Learn More
+- `siteConfig`: name, title, email, social links, resume URL, hero text
+- `projects`: project cards, tech tags, GitHub/live links
+- `skills`: skill list, icon keys, and proficiency percentages
+- `experiences`: timeline entries
+- `aboutHighlights`: short profile highlights
 
-To learn more about Next.js, take a look at the following resources:
+## Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy `.env.example` to `.env.local` and set values:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+- `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+- `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_GA_ID` (optional)
 
-## Deploy on Vercel
+## EmailJS Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Create an EmailJS account and email service.
+2. Create an email template with fields: `from_name`, `from_email`, `message`.
+3. Add service/template/public key values in `.env.local`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Sections Implemented
+
+- Hero (typing effect, CTA, social links)
+- About
+- Projects (filters + hover + links)
+- Skills (animated progress bars)
+- Experience (timeline)
+- Contact (functional form)
+- Sticky navbar with smooth scrolling and theme toggle
+
+## Advanced UX Features
+
+- Custom cursor (desktop)
+- Particle background
+- Scroll progress bar
+- Micro-interactions and motion reveal
+- Lazy-loaded visual effects using dynamic imports
+
+## Accessibility + SEO
+
+- Semantic sections and labeled controls
+- Keyboard-friendly navigation and clear focus behavior
+- Metadata, OpenGraph, Twitter tags
+- `robots.ts` and `sitemap.ts`
+
+## Build + Lint
+
+```bash
+npm run lint
+npm run build
+```
+
+## Deployment
+
+### Vercel (recommended)
+
+1. Push code to GitHub.
+2. Import repository in Vercel.
+3. Add environment variables in project settings.
+4. Deploy.
+
+### Netlify
+
+1. Create a new Netlify site from repo.
+2. Build command: `npm run build`
+3. Publish directory: `.next`
+4. Add all environment variables.
+
+## Custom Domain Checklist
+
+- Add domain in Vercel/Netlify dashboard.
+- Point DNS records to platform targets.
+- Wait for SSL certificate provisioning.
+- Update `NEXT_PUBLIC_SITE_URL`.
+
+## Notes
+
+- Replace placeholder project images in `public/projects/`.
+- Keep section components reusable under `src/components/sections`.
+- Heavier effects are client-only and dynamically loaded for faster first paint.
+
