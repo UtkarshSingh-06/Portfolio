@@ -5,6 +5,7 @@ import * as FaIcons from "react-icons/fa6";
 import * as SiIcons from "react-icons/si";
 import { skills } from "@/data/site";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SkillsMarquee } from "@/components/shared/skills-marquee";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
 
 type IconComponent = React.ComponentType<{ className?: string }>;
@@ -80,28 +81,9 @@ export function SkillsSection() {
         })}
       </div>
 
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        className="mt-10 flex flex-wrap justify-center gap-3"
-      >
-        {skills.map((skill) => {
-          const Icon = iconMap[skill.icon] ?? FaIcons.FaCode;
-          return (
-            <motion.span
-              key={`chip-${skill.name}`}
-              variants={fadeUp}
-              whileHover={{ y: -4, scale: 1.05 }}
-              className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm"
-            >
-              <Icon className="h-4 w-4 text-indigo-500" />
-              {skill.name}
-            </motion.span>
-          );
-        })}
-      </motion.div>
+      <div className="mt-14">
+        <SkillsMarquee />
+      </div>
     </section>
   );
 }
