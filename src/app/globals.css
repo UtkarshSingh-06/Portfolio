@@ -157,6 +157,45 @@ h4 {
   50% { opacity: 0; }
 }
 
+/* Horizontal skills marquee — seamless infinite scroll.
+   The inner track is duplicated; shifting by -50% swaps one copy for the other. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-slow {
+  animation: marquee 70s linear infinite;
+  will-change: transform;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.marquee-pause-hover:hover .animate-marquee,
+.marquee-pause-hover:hover .animate-marquee-slow {
+  animation-play-state: paused;
+}
+
 /* Accessible focus ring */
 :focus-visible {
   outline: 2px solid var(--accent);
