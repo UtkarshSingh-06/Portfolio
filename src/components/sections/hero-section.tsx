@@ -4,9 +4,16 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
-import { siteConfig, typedRoles } from "@/data/site";
+import { siteConfig } from "@/data/site";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { scrollToSection } from "@/lib/utils";
+
+const heroRoles = [
+  "Full-Stack Developer",
+  "Backend Engineer",
+  "Cloud & DevOps Engineer",
+  "Open Source Contributor",
+];
 
 function useTyped(words: string[], typeSpeed = 70, deleteSpeed = 40, hold = 1400) {
   const [text, setText] = useState("");
@@ -39,7 +46,7 @@ function useTyped(words: string[], typeSpeed = 70, deleteSpeed = 40, hold = 1400
 }
 
 export function HeroSection() {
-  const typed = useTyped(typedRoles);
+  const typed = useTyped(heroRoles);
 
   return (
     <section
@@ -79,13 +86,18 @@ export function HeroSection() {
           >
             Hi, I&apos;m{" "}
             <span className="gradient-text">{siteConfig.name}</span>
-            <br />
-            <span className="text-zinc-500 dark:text-zinc-500">
-              a&nbsp;
-              <span className="text-foreground">{typed}</span>
-              <span className="caret h-[0.9em] align-[-0.12em]" />
-            </span>
           </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            className="-mt-3 text-lg font-medium text-zinc-500 dark:text-zinc-400 sm:text-xl md:text-2xl"
+          >
+            a{" "}
+            <span className="font-semibold text-zinc-800 dark:text-zinc-100">
+              {typed}
+            </span>
+            <span className="caret h-[0.9em] align-[-0.12em]" />
+          </motion.p>
 
           <motion.p
             variants={fadeUp}
