@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Award, GraduationCap, Rocket, Sparkles } from "lucide-react";
-import { aboutHighlights, aboutStats, education, siteConfig } from "@/data/site";
+import { aboutHighlights, aboutStats, education } from "@/data/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import {
   fadeUp,
@@ -20,7 +20,7 @@ export function AboutSection() {
       <SectionHeading
         title="A bit about me"
         subtitle="Who I Am"
-        description="I'm a B.Tech IT student at Manipal University Jaipur who loves building full-stack products and AI-powered systems. I enjoy turning complex problems into clean, scalable solutions."
+        description="I'm a 3rd-year Information Technology student at Manipal University Jaipur, building fast, scalable full-stack applications and real-world AI systems."
       />
 
       <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
@@ -32,19 +32,68 @@ export function AboutSection() {
           className="space-y-6"
         >
           <p className="text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-            Based in{" "}
-            <span className="font-semibold text-foreground">{siteConfig.location}</span>,
-            I&apos;ve led development at CampusAdda (a production app with{" "}
-            <span className="font-semibold text-foreground">10K+ daily active users</span>),
-            contributed to open source through{" "}
-            <span className="font-semibold text-foreground">GSSoC &apos;25</span>, and built
-            AI-powered systems for fraud detection and automated QA.
+            I&apos;m a 3rd-year Information Technology student at Manipal University Jaipur,
+            building fast, scalable full-stack applications and real-world AI systems.
           </p>
           <p className="leading-relaxed text-zinc-600 dark:text-zinc-400">
-            I work across the stack — from React/Next.js frontends to FastAPI and Node
-            backends — and ship with AWS, Docker, and CI/CD in mind. Currently exploring AI
-            engineering, system design, and open source.
+            My focus is on backend engineering and cloud-native development — working with
+            Node.js, FastAPI, and modern DevOps tools like Docker, Kubernetes, and Terraform
+            to design and deploy production-ready systems on AWS.
           </p>
+          <p className="leading-relaxed text-zinc-600 dark:text-zinc-400">
+            I&apos;ve made 1300+ commits on GitHub and solved 200+ problems on LeetCode,
+            consistently improving my problem-solving and engineering skills.
+          </p>
+          <p className="leading-relaxed text-zinc-600 dark:text-zinc-400">
+            I enjoy solving complex problems, designing scalable architectures, and
+            continuously exploring AI engineering, system design, and high-performance
+            distributed systems.
+          </p>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            className="flex flex-wrap gap-3 pt-1"
+          >
+            {["Open to Internships", "Available for Projects"].map((item) => (
+              <motion.span
+                key={item}
+                variants={fadeUp}
+                className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300"
+              >
+                {item}
+              </motion.span>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={slideInRight}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="space-y-3"
+        >
+          {aboutHighlights.map((item, idx) => {
+            const Icon = highlightIcons[idx % highlightIcons.length];
+            return (
+              <motion.div
+                key={item}
+                whileHover={{ x: 6 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="glass flex items-start gap-4 rounded-xl p-4"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500/20 to-cyan-400/20 text-indigo-500 dark:text-indigo-300">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <div className="space-y-1">
+                  <p className="font-medium text-foreground">{item}</p>
+                </div>
+              </motion.div>
+            );
+          })}
 
           <motion.div
             variants={staggerContainer}
@@ -87,33 +136,6 @@ export function AboutSection() {
               ) : null}
             </div>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          variants={slideInRight}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="space-y-3"
-        >
-          {aboutHighlights.map((item, idx) => {
-            const Icon = highlightIcons[idx % highlightIcons.length];
-            return (
-              <motion.div
-                key={item}
-                whileHover={{ x: 6 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="glass flex items-start gap-4 rounded-xl p-4"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500/20 to-cyan-400/20 text-indigo-500 dark:text-indigo-300">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div className="space-y-1">
-                  <p className="font-medium text-foreground">{item}</p>
-                </div>
-              </motion.div>
-            );
-          })}
         </motion.div>
       </div>
     </section>
