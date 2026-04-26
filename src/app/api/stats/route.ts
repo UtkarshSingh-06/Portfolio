@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fetchGithubYearContributions } from "@/lib/stats/fetch-github-contributions";
 
 export const dynamic = "force-dynamic";
 
@@ -151,25 +152,7 @@ async function fetchLeetCodeCalendarProxy(): Promise<Record<string, number>> {
 
 // ── GitHub ────────────────────────────────────────────────
 async function fetchGitHubContributions(year: number) {
-  try {
-    const res = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/${GH_USERNAME}?y=${year}`,
-      { signal: abortSignal() }
-    );
-    if (!res.ok) return null;
-    const d = await res.json() as {
-      total?: Record<string, number>;
-      contributions?: { date: string; count: number }[];
-    };
-    const total = d.total?.[String(year)] ?? 0;
-    const days: Record<string, number> = {};
-    for (const c of d.contributions ?? []) {
-      if (c.count > 0) days[c.date] = c.count;
-    }
-    return { total, days };
-  } catch {
-    return null;
-  }
+  return fetchGithubYearContributions(GH_USERNAME, year);
 }
 
 async function fetchGitHubProfile() {
@@ -179,6 +162,7 @@ async function fetchGitHubProfile() {
     const res = await fetch(`https://api.github.com/users/${GH_USERNAME}`, {
       headers,
       signal: abortSignal(),
+      cache: "no-store",
     });
     if (!res.ok) return { followers: null, publicRepos: null };
     const u = await res.json() as { followers?: number; public_repos?: number };
@@ -237,9 +221,10 @@ export async function GET() {
       source:           lcSolvedGQL ? "graphql" : lcSolvedProxy ? "proxy" : "none",
     },
     github: {
-      total:      ghContribs?.total ?? null,
-      days:       ghContribs?.days  ?? null,
-      followers:  ghProfile.followers,
+      total:       ghContribs?.total ?? null,
+      days:        ghContribs?.days  ?? null,
+      maxStreak:   ghContribs?.maxStreak ?? null,
+      followers:   ghProfile.followers,
       publicRepos: ghProfile.publicRepos,
     },
     fetchedAt: new Date().toISOString(),
