@@ -8,7 +8,6 @@ import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { SiLeetcode } from "react-icons/si";
 import { siteConfig } from "@/data/site";
 import { cn, scrollToSection } from "@/lib/utils";
-import { ThemeToggle } from "./theme-toggle";
 
 const socialLinks = [
   {
@@ -205,9 +204,6 @@ export function Navbar() {
                   <Download className="h-4 w-4" />
                   Resume
                 </a>
-                <div className="flex justify-center pt-1">
-                  <ThemeToggle />
-                </div>
               </div>
             </motion.div>
           </>
@@ -317,8 +313,6 @@ export function Navbar() {
             <Download className="h-4 w-4" />
             Resume
           </a>
-
-          <ThemeToggle />
 
           {/* Nav drawer trigger — always visible on the right */}
           <button
