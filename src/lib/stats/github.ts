@@ -1,3 +1,5 @@
+import { fetchGithubYearContributions } from "./fetch-github-contributions";
+
 export type GithubDay = { date: string; count: number; level: number };
 
 export type GithubCodingStats = {
@@ -11,12 +13,7 @@ export type GithubCodingStats = {
   error?: string;
 };
 
-type JGruberResponse = {
-  total?: Record<string, number>;
-  contributions?: GithubDay[];
-};
-
-const REVALIDATE_SEC = 3600; // 1-hour cache
+const REVALIDATE_SEC = 3600; // 1-hour cache (SSR); live client refresh uses /api/stats
 
 function parseGithubUsernameFromUrl(url: string): string | null {
   try {
@@ -93,17 +90,17 @@ export async function fetchGithubCodingStats(githubProfileUrl: string, year = 20
   let err: string | undefined;
 
   try {
-    const res = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=${year}`,
-      { next: { revalidate: REVALIDATE_SEC } }
-    );
-    if (!res.ok) {
-      err = `Contributions API HTTP ${res.status}`;
+    const contrib = await fetchGithubYearContributions(username, year);
+    if (!contrib) {
+      err = "Could not load GitHub contributions";
     } else {
-      const json = (await res.json()) as JGruberResponse;
-      total = json.total?.[String(year)] ?? 0;
-      for (const d of json.contributions ?? []) {
-        map.set(d.date, d);
+      total = contrib.total;
+      for (const [date, count] of Object.entries(contrib.days)) {
+        map.set(date, {
+          date,
+          count,
+          level: count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 9 ? 3 : 4,
+        });
       }
     }
   } catch {
