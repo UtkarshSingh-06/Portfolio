@@ -401,8 +401,9 @@ export function ContactSection() {
           </span>
         </div>
 
-        {/* Weekly grid */}
-        <div className="mt-4 grid grid-cols-7 gap-2 text-center">
+        {/* Weekly grid — scroll horizontally on very small screens */}
+        <div className="-mx-1 mt-4 overflow-x-auto pb-1">
+        <div className="grid min-w-[340px] grid-cols-7 gap-2 px-1 text-center">
           {weeklyWithToday.map((day) => (
             <div
               key={day.key}
@@ -435,6 +436,7 @@ export function ContactSection() {
               </div>
             </div>
           ))}
+        </div>
         </div>
 
         {/* Book a call */}
