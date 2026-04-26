@@ -80,7 +80,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="flex h-9 w-12 items-center justify-center rounded border border-zinc-300 bg-white/60 font-pixel text-[10px] text-zinc-600 transition hover:border-cyan-500/60 hover:text-cyan-700 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300 dark:hover:text-cyan-400"
+                className="flex h-11 w-14 items-center justify-center rounded border border-zinc-300 bg-white/60 font-pixel text-[10px] text-zinc-600 transition hover:border-cyan-500/60 hover:text-cyan-700 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300 dark:hover:text-cyan-400"
               >
                 {code}
               </a>
@@ -96,7 +96,7 @@ export function Footer() {
               <li key={label}>
                 <button
                   onClick={() => scrollToSection(href)}
-                  className="group flex items-center gap-1 text-sm text-zinc-600 transition hover:text-cyan-700 dark:text-zinc-400 dark:hover:text-cyan-400"
+                  className="group flex min-h-[44px] items-center gap-1 text-sm text-zinc-600 transition hover:text-cyan-700 dark:text-zinc-400 dark:hover:text-cyan-400"
                 >
                   <span className="text-zinc-400 transition group-hover:text-cyan-600 dark:text-zinc-600 dark:group-hover:text-cyan-500">&gt;</span>
                   <span>{label}</span>
@@ -166,9 +166,9 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ── Floating shortcut hint bar ── */}
+      {/* ── Floating shortcut hint bar — hidden on touch-only devices ── */}
       <div
-        className={`pointer-events-none fixed bottom-24 left-1/2 z-50 -translate-x-1/2 transition-opacity duration-700 ${
+        className={`pointer-events-none fixed bottom-24 left-1/2 z-50 hidden -translate-x-1/2 transition-opacity duration-700 md:block ${
           showHint ? "opacity-100" : "opacity-0"
         }`}
       >
