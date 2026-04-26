@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import type { GithubCodingStats } from "@/lib/stats/github";
 import type { LeetcodeCodingStats } from "@/lib/stats/leetcode";
@@ -137,6 +137,7 @@ type ApiResponse = {
   github: {
     total: number | null;
     days: Record<string, number> | null;
+    maxStreak: number | null;
     followers: number | null;
     publicRepos: number | null;
   };
@@ -173,18 +174,16 @@ function buildGrid(year: number, dayMap: Record<string, number>, palette: "githu
   return weeks;
 }
 
+const REFRESH_MS = 5 * 60 * 1000; // 5 min — GitHub third-party cache can lag vs profile
+
 export function CodingActivityPanels({ github: ghInit, leetcode: lcInit, githubProfileUrl, leetcodeProfileUrl }: Props) {
   const [github, setGithub] = useState(ghInit);
   const [leetcode, setLeetcode] = useState(lcInit);
   const [liveStatus, setLiveStatus] = useState<"loading" | "live" | "partial" | "cached">("loading");
   const [fetchedAt, setFetchedAt] = useState<string | null>(null);
-  const hasFetched = useRef(false);
 
-  useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-
-    fetch("/api/stats")
+  const loadStats = useCallback(() => {
+    fetch("/api/stats", { cache: "no-store" })
       .then((r) => r.json())
       .then((data: ApiResponse) => {
         const year = lcInit.year;
@@ -210,6 +209,7 @@ export function CodingActivityPanels({ github: ghInit, leetcode: lcInit, githubP
           setGithub((prev) => ({
             ...prev,
             totalContributions: data.github.total ?? prev.totalContributions,
+            maxStreak: data.github.maxStreak ?? prev.maxStreak,
             followers: data.github.followers ?? prev.followers,
             publicRepos: data.github.publicRepos ?? prev.publicRepos,
             weeks: weeks.length > 0 ? weeks : prev.weeks,
@@ -217,18 +217,24 @@ export function CodingActivityPanels({ github: ghInit, leetcode: lcInit, githubP
         }
 
         setFetchedAt(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-        // Only show LIVE if solved data actually arrived from the API
         const gotSolved = Boolean(data.leetcode.solved);
-        const gotGH     = data.github.total !== null;
+        const gotGH = data.github.total !== null;
         setLiveStatus(gotSolved || gotGH ? (gotSolved ? "live" : "partial") : "cached");
       })
       .catch(() => setLiveStatus("cached"));
   }, [lcInit.year]);
 
+  useEffect(() => {
+    loadStats();
+    const id = setInterval(loadStats, REFRESH_MS);
+    return () => clearInterval(id);
+  }, [loadStats]);
+
   const ghSlug = github.username.toUpperCase();
   const lcSlug = leetcode.username.toUpperCase();
 
   return (
+    <>
     <div className="grid gap-6 lg:grid-cols-2">
 
       {/* ── GitHub ─────────────────────────────────────── */}
@@ -265,9 +271,16 @@ export function CodingActivityPanels({ github: ghInit, leetcode: lcInit, githubP
             {github.totalContributions} contributions in {github.year}
           </div>
           <Heatmap weeks={github.weeks} palette="github" />
-          <div className="mt-1.5 flex items-center justify-between gap-2 text-[9px] text-zinc-500 dark:text-zinc-600">
-            <span>
+          <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2 text-[9px] text-zinc-500 dark:text-zinc-600">
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
               {fetchedAt ? `Updated ${fetchedAt}` : "Loading…"}
+              <button
+                type="button"
+                onClick={() => loadStats()}
+                className="rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-semibold uppercase tracking-wider text-emerald-700 transition hover:bg-emerald-500/20 dark:text-emerald-400"
+              >
+                Refresh
+              </button>
             </span>
             <span className="flex items-center gap-2">
               Less
@@ -342,5 +355,10 @@ export function CodingActivityPanels({ github: ghInit, leetcode: lcInit, githubP
       </div>
 
     </div>
+    <p className="mx-auto mt-2 max-w-2xl text-center text-[10px] leading-relaxed text-zinc-500 dark:text-zinc-500">
+      GitHub totals match your profile when <span className="font-mono text-zinc-600 dark:text-zinc-400">GITHUB_TOKEN</span> is set
+      on the server (classic PAT with <span className="font-mono">read:user</span>). Otherwise a public contributions API is used and can lag slightly behind github.com.
+    </p>
+    </>
   );
 }
