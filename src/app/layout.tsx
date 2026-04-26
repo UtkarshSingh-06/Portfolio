@@ -59,10 +59,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#07090d" },
-  ],
+  themeColor: "#07090d",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -70,7 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${pressStart.variable}`}
+      className={`dark ${inter.variable} ${spaceGrotesk.variable} ${pressStart.variable}`}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
