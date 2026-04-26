@@ -179,7 +179,7 @@ export function Navbar() {
             onClick={() => setOpen((prev) => !prev)}
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="glass rounded-full p-2"
+            className="glass flex h-11 w-11 items-center justify-center rounded-full"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -209,7 +209,8 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="fixed inset-y-0 right-0 z-50 flex w-72 flex-col border-l border-zinc-200/80 bg-white/95 backdrop-blur-xl dark:border-zinc-800/80 dark:bg-zinc-950/95"
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(18rem,85vw)] flex-col border-l border-zinc-200/80 bg-white/95 backdrop-blur-xl dark:border-zinc-800/80 dark:bg-zinc-950/95"
+              style={{ paddingRight: "env(safe-area-inset-right)" }}
             >
               {/* Drawer header */}
               <div className="flex items-center justify-between border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-800/70">
@@ -220,7 +221,7 @@ export function Navbar() {
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700 dark:hover:border-indigo-500"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700 dark:hover:border-indigo-500"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -274,7 +275,7 @@ export function Navbar() {
                     target="_blank"
                     rel="noreferrer"
                     className={cn(
-                      "glass flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition dark:text-zinc-400",
+                      "glass flex h-11 w-11 items-center justify-center rounded-full text-zinc-500 transition dark:text-zinc-400",
                       hoverClass
                     )}
                   >
@@ -284,7 +285,7 @@ export function Navbar() {
               </div>
 
               {/* Bottom actions */}
-              <div className="flex flex-col gap-2 px-5 pb-6">
+              <div className="flex flex-col gap-2 px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
                 <a
                   href={siteConfig.gmailCompose}
                   target="_blank"
