@@ -86,7 +86,7 @@ function ProjectBanner({
   liveUrl,
 }: {
   title: string;
-  year?: number;
+  year?: string | number;
   tags: string[];
   githubUrl: string;
   liveUrl: string;
