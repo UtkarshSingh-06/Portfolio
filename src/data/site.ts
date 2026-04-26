@@ -41,6 +41,23 @@ export type EducationEntry = {
   honors?: string;
 };
 
+export type AboutHighlightIcon =
+  | "award"
+  | "sparkles"
+  | "cpu"
+  | "cloud"
+  | "activity"
+  | "building"
+  | "smartphone";
+
+export type AboutHighlight = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  href?: string;
+  icon: AboutHighlightIcon;
+};
+
 export const siteConfig = {
   name: "Utkarsh Singh",
   firstName: "Utkarsh",
@@ -68,6 +85,7 @@ export const siteConfig = {
     { label: "About", href: "#about" },
     { label: "Projects", href: "#projects" },
     { label: "Skills", href: "#skills" },
+    { label: "Activity", href: "#activity" },
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
   ] satisfies NavItem[],
@@ -80,64 +98,110 @@ export const typedRoles = [
   "Problem Solver",
 ];
 
-export const aboutHighlights = [
-  "Led development of CampusAdda, a production app with 10K+ daily active users",
-  "Open-source contributor at GirlScript Summer of Code (GSSoC '25)",
-  "AWS Certified Solutions Architect – Associate (SAA-C03)",
-  "B.Tech IT at Manipal University Jaipur — multiple excellence awards",
-];
-
-export const aboutStats = [
-  { label: "Daily Active Users", value: "10K+" },
-  { label: "Students Coordinated", value: "500+" },
-  { label: "Major Projects", value: "10+" },
-  { label: "Certifications", value: "5+" },
+export const aboutHighlights: AboutHighlight[] = [
+  {
+    id: "aws-saa",
+    icon: "award",
+    title: "AWS Certified Solutions Architect – Associate (SAA-C03)",
+    subtitle: "Amazon Web Services",
+  },
+  {
+    id: "gssoc",
+    icon: "sparkles",
+    title: "Open-source contributor — GirlScript Summer of Code (GSSoC '25)",
+    subtitle: "Production-grade contributions, reviews, and documentation",
+  },
+  {
+    id: "fraudshield",
+    icon: "cpu",
+    title: "FraudShield AI — UPI fraud detection platform",
+    subtitle: "Full-stack risk scoring, WebSocket live monitoring, React analytics dashboard",
+    href: "https://github.com/UtkarshSingh-06/AI-Powered-Payment-Fraud-Detection-System",
+  },
+  {
+    id: "cqc",
+    icon: "cloud",
+    title: "Enterprise AI CQC automation framework",
+    subtitle: "Drift detection, quality gates, CI/CD, Prometheus/Grafana, Terraform on AWS",
+    href: "https://github.com/UtkarshSingh-06/Enterprise-AI-Continuous-Quality-Control-CQC-Automation-Framework",
+  },
+  {
+    id: "netscope",
+    icon: "activity",
+    title: "NetScope — eBPF network observability",
+    subtitle: "Kernel-level metrics, Go agents, FastAPI + Next.js control plane, K8s-ready",
+    href: "https://github.com/UtkarshSingh-06/NetScope",
+  },
+  {
+    id: "realestate",
+    icon: "building",
+    title: "Real Estate Booking System",
+    subtitle: "FastAPI + MongoDB, React, Stripe, Socket.IO live chat, Google OAuth & Maps",
+    href: "https://github.com/UtkarshSingh-06/Real-Estate-Booking-System",
+  },
+  {
+    id: "hackforge",
+    icon: "smartphone",
+    title: "SubTracker Pro India (Hackforge)",
+    subtitle: "Flutter + Firebase subscription tracker for Indian users — INR billing, Razorpay, FCM reminders",
+    href: "https://github.com/UtkarshSingh-06/hackforge",
+  },
 ];
 
 export const projects: Project[] = [
   {
-    title: "AI-Powered Payment Fraud Detection System",
+    title: "FraudShield AI — UPI Fraud Detection Platform",
     description:
-      "Real-time fraud detection processing 10K+ transactions/day with 92%+ accuracy. Low-latency FastAPI services (<120 ms) integrated with a React monitoring dashboard, deployed on AWS with 99.9% uptime.",
-    tags: ["Python", "FastAPI", "React", "TensorFlow", "AWS", "Docker"],
+      "Full-stack fraud prevention for UPI apps: AI risk scoring per transaction, real-time WebSocket alerts, JWT auth, and a React analytics dashboard (Vite + Recharts).",
+    tags: ["Node.js", "Express", "React", "WebSocket", "JWT", "Vite"],
     image: "/projects/project1.svg",
-    githubUrl: "https://github.com/UtkarshSingh-06",
-    liveUrl: "https://github.com/UtkarshSingh-06",
+    githubUrl: "https://github.com/UtkarshSingh-06/AI-Powered-Payment-Fraud-Detection-System",
+    liveUrl: "https://github.com/UtkarshSingh-06/AI-Powered-Payment-Fraud-Detection-System",
     year: "2025",
   },
   {
     title: "Enterprise AI Continuous Quality Control (CQC) Framework",
     description:
-      "AI-driven QA framework that reduced manual effort by 60% via automated anomaly detection. Containerized microservices orchestrated on Kubernetes, IaC with Terraform/Ansible, CI/CD on GitHub Actions cutting release time by 40%.",
-    tags: ["Python", "Docker", "Kubernetes", "CI/CD", "AWS", "Terraform", "Ansible"],
+      "ML reliability platform: drift detection (PSI/KL), quality gates blocking bad deploys, experiment tracking, synthetic edge-case data, Prometheus metrics, and Terraform-backed AWS deployment.",
+    tags: ["Python", "FastAPI", "Docker", "Kubernetes", "Prometheus", "Terraform", "MLflow"],
     image: "/projects/project2.svg",
-    githubUrl: "https://github.com/UtkarshSingh-06",
-    liveUrl: "https://github.com/UtkarshSingh-06",
+    githubUrl: "https://github.com/UtkarshSingh-06/Enterprise-AI-Continuous-Quality-Control-CQC-Automation-Framework",
+    liveUrl: "https://github.com/UtkarshSingh-06/Enterprise-AI-Continuous-Quality-Control-CQC-Automation-Framework",
+    year: "2025",
+  },
+  {
+    title: "NetScope — Network Observability & Security",
+    description:
+      "eBPF + Go observability agents with a FastAPI/Next.js control plane: live traffic metrics, anomaly detection, threat intel enrichment, IDS rules, and Docker/Kubernetes deployment patterns.",
+    tags: ["eBPF", "Go", "FastAPI", "Next.js", "Prometheus", "Kubernetes"],
+    image: "/projects/project4.svg",
+    githubUrl: "https://github.com/UtkarshSingh-06/NetScope",
+    liveUrl: "https://github.com/UtkarshSingh-06/NetScope",
     year: "2025",
   },
   {
     title: "Real Estate Booking System",
     description:
-      "Full-stack MERN booking platform supporting 1K+ users with secure auth and dynamic search. Optimized REST APIs reduced response time by 30%. Responsive UI in React + Tailwind, deployed on AWS with Docker.",
-    tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind", "AWS"],
+      "End-to-end property discovery and bookings: FastAPI backend, MongoDB, React + Tailwind/shadcn UI, JWT + Google OAuth, Stripe deposits, and Socket.IO messaging between buyers and owners.",
+    tags: ["FastAPI", "MongoDB", "React", "Socket.IO", "Stripe", "Google OAuth"],
     image: "/projects/project3.svg",
-    githubUrl: "https://github.com/UtkarshSingh-06",
-    liveUrl: "https://github.com/UtkarshSingh-06",
+    githubUrl: "https://github.com/UtkarshSingh-06/Real-Estate-Booking-System",
+    liveUrl: "https://github.com/UtkarshSingh-06/Real-Estate-Booking-System",
     year: "2024",
   },
   {
-    title: "NetScope — Network Monitoring & Analysis Tool",
+    title: "SubTracker Pro India (Hackforge)",
     description:
-      "Linux-based network monitor analyzing 5K+ packets/sec with packet inspection, structured logging, and alerting. Reduced troubleshooting time by 35% with rich metric visualizations and observability pipelines.",
-    tags: ["Python", "Linux", "Networking", "Observability"],
-    image: "/projects/project4.svg",
-    githubUrl: "https://github.com/UtkarshSingh-06",
-    liveUrl: "https://github.com/UtkarshSingh-06",
-    year: "2024",
+      "Cross-platform Flutter app for Indian subscription hygiene: Firebase auth & Firestore, renewal reminders (FCM), INR-aware billing cycles, Razorpay, charts, and localization — built for real-world daily use.",
+    tags: ["Flutter", "Firebase", "Razorpay", "Riverpod", "Firestore", "FCM"],
+    image: "/projects/project1.svg",
+    githubUrl: "https://github.com/UtkarshSingh-06/hackforge",
+    liveUrl: "https://github.com/UtkarshSingh-06/hackforge",
+    year: "2026",
   },
 ];
 
-export const projectFilters = ["All", "React", "Python", "AWS", "Docker"] as const;
+export const projectFilters = ["All", "React", "Python", "Flutter", "AWS", "Docker"] as const;
 
 export const skills: Skill[] = [
   { name: "React.js", level: 92, icon: "FaReact", category: "frontend" },
