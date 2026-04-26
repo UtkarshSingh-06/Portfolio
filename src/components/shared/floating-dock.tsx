@@ -43,7 +43,7 @@ export function FloatingDock() {
   if (!mounted) return null;
 
   return (
-    <div className="pointer-events-none fixed bottom-4 left-4 z-40 sm:bottom-6 sm:left-6">
+    <div className="pointer-events-none fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-[calc(1rem+env(safe-area-inset-left))] z-40 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:left-[calc(1.5rem+env(safe-area-inset-left))]">
       <div className="pointer-events-auto flex flex-col items-start gap-3">
           <AnimatePresence>
             {showCard ? (
@@ -67,7 +67,7 @@ export function FloatingDock() {
                 <button
                   onClick={dismissCard}
                   aria-label="Dismiss availability card"
-                  className="absolute right-2 top-2 rounded-md p-1 text-zinc-500 transition hover:bg-black/5 hover:text-zinc-700 dark:hover:bg-white/5 dark:hover:text-zinc-200"
+                  className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-md text-zinc-500 transition hover:bg-black/5 hover:text-zinc-700 dark:hover:bg-white/5 dark:hover:text-zinc-200"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
