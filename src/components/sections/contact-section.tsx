@@ -106,7 +106,7 @@ const contactCards = [
     value: githubHandle,
     href: siteConfig.socialLinks.github,
     icon: FaGithub,
-    accent: "from-zinc-400/20 to-zinc-400/5 text-zinc-200",
+    accent: "from-zinc-400/20 to-zinc-400/5 text-zinc-600 dark:text-zinc-200",
     external: true,
   },
   {
@@ -233,8 +233,9 @@ export function ContactSection() {
           variants={fadeUp}
           className="mt-5 max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-base"
         >
-          Whether it&apos;s a summer internship, a project collab, or a
-          conversation about tech — reach out and I&apos;ll get back fast.
+          Whether it&apos;s a full-time role, summer internship, freelance
+          engagement, open-source collaboration, or just a conversation about
+          tech — reach out and I&apos;ll get back fast.
         </motion.p>
       </motion.div>
 
@@ -246,7 +247,7 @@ export function ContactSection() {
         viewport={viewportOnce}
         className="mb-6 grid gap-3 sm:grid-cols-[1fr_auto_auto]"
       >
-        <div className="glass group relative flex flex-col justify-center overflow-hidden rounded-2xl border border-white/10 p-4 sm:p-5">
+        <div className="glass group relative flex flex-col justify-center overflow-hidden rounded-2xl border border-black/10 p-4 dark:border-white/10 sm:p-5">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
             Primary Email
           </div>
@@ -297,7 +298,7 @@ export function ContactSection() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
           href={siteConfig.socialLinks.email}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-zinc-800 backdrop-blur transition hover:border-cyan-400/40 hover:text-cyan-500 dark:text-zinc-100 dark:hover:text-cyan-300"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-black/10 bg-black/5 px-5 py-3 text-sm font-semibold text-zinc-800 backdrop-blur transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-100 dark:hover:text-cyan-300"
         >
           Open Mail App
           <ArrowUpRight className="h-4 w-4" />
@@ -323,7 +324,7 @@ export function ContactSection() {
               href={card.href}
               target={card.external ? "_blank" : undefined}
               rel={card.external ? "noreferrer" : undefined}
-              className={`glass group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/10 p-4 transition hover:border-cyan-400/40 ${
+              className={`glass group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-black/10 p-4 transition hover:border-cyan-400/40 dark:border-white/10 ${
                 isSpanning ? "lg:col-span-1" : ""
               }`}
             >
@@ -352,7 +353,7 @@ export function ContactSection() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="glass-strong relative overflow-hidden rounded-3xl border border-white/10 p-5 sm:p-6"
+        className="glass-strong relative overflow-hidden rounded-3xl border border-black/10 p-5 dark:border-white/10 sm:p-6"
       >
         <div
           aria-hidden
@@ -360,9 +361,9 @@ export function ContactSection() {
         />
 
         {/* Clock row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 dark:bg-black/30">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-black/10 bg-white/60 px-4 py-3 dark:border-white/10 dark:bg-black/30">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-300">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-700 dark:text-cyan-300">
               <Clock className="h-4 w-4" />
             </span>
             <div className="leading-tight">
@@ -381,7 +382,7 @@ export function ContactSection() {
         {/* Availability header */}
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300">
               <CalendarIcon className="h-4 w-4" />
             </span>
             <div className="leading-tight">
@@ -391,7 +392,7 @@ export function ContactSection() {
               </div>
             </div>
           </div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-400">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-400">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -408,12 +409,12 @@ export function ContactSection() {
               className={`rounded-xl border p-2 transition ${
                 day.isToday
                   ? "border-cyan-400/50 bg-cyan-400/10"
-                  : "border-white/10 bg-white/[0.03]"
+                  : "border-black/10 bg-black/[0.03] dark:border-white/10 dark:bg-white/[0.03]"
               }`}
             >
               <div
                 className={`mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                  day.isToday ? "text-cyan-300" : "text-zinc-500"
+                  day.isToday ? "text-cyan-700 dark:text-cyan-300" : "text-zinc-500"
                 }`}
               >
                 {day.label}
@@ -425,7 +426,7 @@ export function ContactSection() {
                   day.slots.map((slot) => (
                     <span
                       key={slot}
-                      className="rounded-md border border-white/5 bg-black/20 px-1.5 py-1 font-mono text-[10px] tabular-nums text-zinc-200 transition hover:border-cyan-400/40 hover:text-cyan-300 dark:bg-black/30 sm:text-[11px]"
+                      className="rounded-md border border-black/10 bg-white/70 px-1.5 py-1 font-mono text-[10px] tabular-nums text-zinc-700 transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/5 dark:bg-black/30 dark:text-zinc-200 dark:hover:text-cyan-300 sm:text-[11px]"
                     >
                       {slot}
                     </span>
@@ -443,7 +444,7 @@ export function ContactSection() {
           href={bookCallUrl}
           target="_blank"
           rel="noreferrer"
-          className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 py-3 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/20"
+          className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-400/20 dark:text-cyan-300"
         >
           Book a call
           <ArrowUpRight className="h-4 w-4" />
@@ -452,7 +453,7 @@ export function ContactSection() {
 
       {/* Shortcuts footer */}
       <div className="mt-8 flex justify-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] text-zinc-500 backdrop-blur">
+        <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-4 py-2 text-[11px] text-zinc-500 backdrop-blur dark:border-white/10 dark:bg-white/5">
           Press{" "}
           <button
             onClick={() => setShowShortcuts((s) => !s)}
@@ -489,7 +490,7 @@ export function ContactSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-x-0 bottom-8 z-50 mx-auto w-[min(92vw,420px)] rounded-2xl border border-white/10 bg-black/80 p-4 text-sm text-zinc-100 shadow-2xl backdrop-blur"
+            className="fixed inset-x-0 bottom-8 z-50 mx-auto w-[min(92vw,420px)] rounded-2xl border border-black/10 bg-white/95 p-4 text-sm text-zinc-900 shadow-2xl backdrop-blur dark:border-white/10 dark:bg-black/80 dark:text-zinc-100"
           >
             <div className="mb-3 flex items-center justify-between">
               <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-400">
@@ -497,7 +498,7 @@ export function ContactSection() {
               </div>
               <button
                 onClick={() => setShowShortcuts(false)}
-                className="text-[11px] text-zinc-500 hover:text-zinc-200"
+                className="text-[11px] text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
                 aria-label="Close shortcuts"
               >
                 esc
@@ -521,7 +522,7 @@ function StatusPill({ status }: { status: Status }) {
   if (status === "sleeping") {
     return (
       <div className="flex flex-col items-end">
-        <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-300">
+        <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
           <Moon className="h-3 w-3" />
           Sleeping
         </span>
@@ -533,7 +534,7 @@ function StatusPill({ status }: { status: Status }) {
   }
   return (
     <div className="flex flex-col items-end">
-      <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+      <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
         <Sun className="h-3 w-3" />
         Active
       </span>
@@ -546,7 +547,7 @@ function StatusPill({ status }: { status: Status }) {
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex min-w-[20px] items-center justify-center rounded-md border border-white/15 bg-white/10 px-1.5 font-mono text-[10px] text-zinc-200">
+    <kbd className="inline-flex min-w-[20px] items-center justify-center rounded-md border border-black/15 bg-black/10 px-1.5 font-mono text-[10px] text-zinc-700 dark:border-white/15 dark:bg-white/10 dark:text-zinc-200">
       {children}
     </kbd>
   );
@@ -554,8 +555,8 @@ function Kbd({ children }: { children: React.ReactNode }) {
 
 function ShortcutRow({ k, label }: { k: string; label: string }) {
   return (
-    <li className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.03] px-3 py-2">
-      <span className="text-zinc-300">{label}</span>
+    <li className="flex items-center justify-between rounded-lg border border-black/8 bg-black/[0.03] px-3 py-2 dark:border-white/5 dark:bg-white/[0.03]">
+      <span className="text-zinc-700 dark:text-zinc-300">{label}</span>
       <Kbd>{k}</Kbd>
     </li>
   );
