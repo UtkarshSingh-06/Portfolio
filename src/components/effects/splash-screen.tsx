@@ -5,13 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const BOOT_LINES = [
   { text: "UTKARSH.EXE — v2.0.26", delay: 0, style: "text-cyan-400 font-bold" },
-  { text: "──────────────────────────────────────", delay: 180, style: "text-zinc-600" },
-  { text: "> Checking AWS credentials        [OK]", delay: 360, style: "text-zinc-300" },
-  { text: "> Spawning Docker containers      [OK]", delay: 540, style: "text-zinc-300" },
-  { text: "> Applying Terraform plan         [OK]", delay: 720, style: "text-zinc-300" },
-  { text: "> kubectl apply -f portfolio.yaml [OK]", delay: 900, style: "text-zinc-300" },
-  { text: "> All pods running.                   ", delay: 1080, style: "text-emerald-400" },
-  { text: "──────────────────────────────────────", delay: 1260, style: "text-zinc-600" },
+  { text: "─────────────────────────────", delay: 180, style: "text-zinc-600" },
+  { text: "> AWS credentials       [OK]", delay: 360, style: "text-zinc-300" },
+  { text: "> Docker containers     [OK]", delay: 540, style: "text-zinc-300" },
+  { text: "> Terraform plan        [OK]", delay: 720, style: "text-zinc-300" },
+  { text: "> kubectl apply         [OK]", delay: 900, style: "text-zinc-300" },
+  { text: "> All pods running.         ", delay: 1080, style: "text-emerald-400" },
+  { text: "─────────────────────────────", delay: 1260, style: "text-zinc-600" },
   { text: "READY.", delay: 1440, style: "text-cyan-300 font-bold tracking-widest" },
 ];
 
@@ -72,14 +72,14 @@ export function SplashScreen() {
               </div>
 
               {/* Terminal body */}
-              <div className="space-y-1.5 px-5 py-5 font-mono text-sm">
+              <div className="space-y-1.5 overflow-x-hidden px-5 py-5 font-mono text-sm">
                 {BOOT_LINES.map((line, i) => (
                   <motion.p
                     key={i}
                     initial={{ opacity: 0, x: -8 }}
                     animate={visibleLines.includes(i) ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className={`whitespace-pre ${line.style}`}
+                    className={`truncate ${line.style}`}
                   >
                     {line.text}
                   </motion.p>
