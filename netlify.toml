@@ -1,0 +1,5 @@
+# NEXT_PUBLIC_* values are compiled into HTML/JS by Next.js on purpose.
+# Netlify secret-scanning still checks for literals of vars marked "secret";
+# omit this public site URL from that check to avoid false-positive build failures.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SITE_URL"
