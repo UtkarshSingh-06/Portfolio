@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Download, Menu, X } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
@@ -32,8 +33,23 @@ const socialLinks = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState<string>(siteConfig.navItems[0]?.href ?? "#home");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  /** Lock page scroll while drawer is open (especially iOS). */
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -70,7 +86,138 @@ export function Navbar() {
     setOpen(false);
   };
 
+  const drawerLayer =
+    mounted &&
+    createPortal(
+      <AnimatePresence>
+        {open ? (
+          <>
+            {/* Backdrop — portaled so `fixed` is viewport-relative (not Framer-transform parent) */}
+            <motion.div
+              key="nav-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+              aria-hidden
+            />
+
+            <motion.div
+              key="nav-drawer"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              className="fixed inset-y-0 right-0 z-[110] flex w-[min(18rem,85vw)] flex-col border-l border-zinc-200/80 bg-white/95 backdrop-blur-xl dark:border-zinc-800/80 dark:bg-zinc-950/95"
+              style={{ paddingRight: "env(safe-area-inset-right)" }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Site navigation"
+            >
+              {/* Drawer header */}
+              <div className="flex items-center justify-between border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-800/70">
+                <span className="font-pixel text-[10px] tracking-[0.28em] text-zinc-500">
+                  NAVIGATE
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700 dark:hover:border-indigo-500"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              {/* Nav items */}
+              <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-4">
+                {siteConfig.navItems.map((item, i) => {
+                  const isActive = activeId === item.href;
+                  return (
+                    <motion.button
+                      key={item.href}
+                      initial={{ opacity: 0, x: 24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.22 }}
+                      onClick={() => handleNav(item.href)}
+                      className={cn(
+                        "group relative flex items-center gap-3 rounded-xl px-4 py-3 text-left font-display text-lg font-semibold tracking-tight transition",
+                        isActive
+                          ? "text-indigo-600 dark:text-indigo-400"
+                          : "text-zinc-700 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-indigo-400"
+                      )}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="drawer-pill"
+                          className="absolute inset-0 rounded-xl bg-indigo-500/10 ring-1 ring-indigo-500/20"
+                          transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                        />
+                      )}
+                      <span className="relative">{item.label}</span>
+                      {isActive && (
+                        <span className="relative ml-auto h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </nav>
+
+              <div className="mx-5 h-px bg-zinc-200/70 dark:bg-zinc-800" />
+
+              <div className="flex items-center justify-center gap-2.5 px-5 py-4">
+                {socialLinks.map(({ href, icon: Icon, label, hoverClass }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      "glass flex h-11 w-11 items-center justify-center rounded-full text-zinc-500 transition dark:text-zinc-400",
+                      hoverClass
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-2 px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+                <a
+                  href={siteConfig.gmailCompose}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-500/25 transition hover:opacity-90"
+                >
+                  Hire Me
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href={siteConfig.resumeUrl}
+                  download
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2.5 text-sm font-semibold transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700"
+                >
+                  <Download className="h-4 w-4" />
+                  Resume
+                </a>
+                <div className="flex justify-center pt-1">
+                  <ThemeToggle />
+                </div>
+              </div>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>,
+      document.body
+    );
+
   return (
+    <>
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -185,134 +332,8 @@ export function Navbar() {
           </button>
         </div>
       </nav>
-
-      {/* ── Right-side drawer (mobile) ─────────────────── */}
-      <AnimatePresence>
-        {open ? (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-              aria-hidden
-            />
-
-            {/* Drawer panel */}
-            <motion.div
-              key="drawer"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="fixed inset-y-0 right-0 z-50 flex w-[min(18rem,85vw)] flex-col border-l border-zinc-200/80 bg-white/95 backdrop-blur-xl dark:border-zinc-800/80 dark:bg-zinc-950/95"
-              style={{ paddingRight: "env(safe-area-inset-right)" }}
-            >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-800/70">
-                <span className="font-pixel text-[10px] tracking-[0.28em] text-zinc-500">
-                  NAVIGATE
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700 dark:hover:border-indigo-500"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-
-              {/* Nav items */}
-              <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-4">
-                {siteConfig.navItems.map((item, i) => {
-                  const isActive = activeId === item.href;
-                  return (
-                    <motion.button
-                      key={item.href}
-                      initial={{ opacity: 0, x: 24 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05, duration: 0.22 }}
-                      onClick={() => handleNav(item.href)}
-                      className={cn(
-                        "group relative flex items-center gap-3 rounded-xl px-4 py-3 text-left font-display text-lg font-semibold tracking-tight transition",
-                        isActive
-                          ? "text-indigo-600 dark:text-indigo-400"
-                          : "text-zinc-700 hover:text-indigo-600 dark:text-zinc-300 dark:hover:text-indigo-400"
-                      )}
-                    >
-                      {/* Active indicator bar */}
-                      {isActive && (
-                        <motion.span
-                          layoutId="drawer-pill"
-                          className="absolute inset-0 rounded-xl bg-indigo-500/10 ring-1 ring-indigo-500/20"
-                          transition={{ type: "spring", stiffness: 300, damping: 28 }}
-                        />
-                      )}
-                      <span className="relative">{item.label}</span>
-                      {isActive && (
-                        <span className="relative ml-auto h-1.5 w-1.5 rounded-full bg-indigo-500" />
-                      )}
-                    </motion.button>
-                  );
-                })}
-              </nav>
-
-              {/* Divider */}
-              <div className="mx-5 h-px bg-zinc-200/70 dark:bg-zinc-800" />
-
-              {/* Social icons */}
-              <div className="flex items-center justify-center gap-2.5 px-5 py-4">
-                {socialLinks.map(({ href, icon: Icon, label, hoverClass }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      "glass flex h-11 w-11 items-center justify-center rounded-full text-zinc-500 transition dark:text-zinc-400",
-                      hoverClass
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
-
-              {/* Bottom actions */}
-              <div className="flex flex-col gap-2 px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
-                <a
-                  href={siteConfig.gmailCompose}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-500/25 transition hover:opacity-90"
-                >
-                  Hire Me
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href={siteConfig.resumeUrl}
-                  download
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-4 py-2.5 text-sm font-semibold transition hover:border-indigo-400 hover:text-indigo-500 dark:border-zinc-700"
-                >
-                  <Download className="h-4 w-4" />
-                  Resume
-                </a>
-                <div className="flex justify-center pt-1">
-                  <ThemeToggle />
-                </div>
-              </div>
-            </motion.div>
-          </>
-        ) : null}
-      </AnimatePresence>
     </motion.header>
+    {drawerLayer}
+    </>
   );
 }
