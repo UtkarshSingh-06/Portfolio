@@ -145,8 +145,8 @@ function ProjectBanner({
         </span>
       ) : null}
 
-      {/* Hover action buttons */}
-      <div className="absolute right-3 top-3 flex gap-2 opacity-0 transition group-hover:opacity-100">
+      {/* Action buttons — always visible on mobile, hover-reveal on desktop */}
+      <div className="absolute right-3 top-3 flex gap-2 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
         <a
           href={githubUrl}
           target="_blank"
@@ -198,7 +198,7 @@ export function ProjectsSection() {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`relative rounded-full px-5 py-2 text-sm font-medium transition ${
+              className={`relative min-h-[44px] rounded-full px-5 py-2 text-sm font-medium transition ${
                 isActive
                   ? "text-white"
                   : "glass text-zinc-600 hover:text-foreground dark:text-zinc-400"
