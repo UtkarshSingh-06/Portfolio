@@ -198,7 +198,7 @@ export function ContactSection() {
   }, [showShortcuts]);
 
   return (
-    <section id="contact" className="relative mx-auto max-w-6xl px-4 py-24">
+    <section id="contact" className="relative mx-auto max-w-7xl px-4 py-24">
       {/* Ambient glow */}
       <div
         aria-hidden
@@ -233,225 +233,222 @@ export function ContactSection() {
           variants={fadeUp}
           className="mt-5 max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-base"
         >
-          Whether it&apos;s a full-time role, summer internship, freelance
-          engagement, open-source collaboration, or just a conversation about
-          tech — reach out and I&apos;ll get back fast.
+          Whether it&apos;s a full-time role, internship, freelance or
+          contract-based role, open-source collaboration, or just a
+          conversation about tech — reach out and I&apos;ll get back fast.
         </motion.p>
       </motion.div>
 
-      {/* Primary email row */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        className="mb-6 grid gap-3 sm:grid-cols-[1fr_auto_auto]"
-      >
-        <div className="glass group relative flex flex-col justify-center overflow-hidden rounded-2xl border border-black/10 p-4 dark:border-white/10 sm:p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
-            Primary Email
+      {/* Two-column: links left · schedule right */}
+      <div className="grid items-start gap-6 lg:grid-cols-2 lg:gap-8">
+        {/* Left — email + contact links */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="flex flex-col gap-3"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="glass group relative overflow-hidden rounded-2xl border border-black/10 p-4 dark:border-white/10 sm:p-5"
+          >
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+              Primary Email
+            </div>
+            <div className="mt-1 truncate text-base font-medium sm:text-lg">
+              {siteConfig.email}
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={copyEmail}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition sm:flex-none"
+                aria-live="polite"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 4 }}
+                      className="inline-flex items-center gap-2"
+                    >
+                      <Check className="h-4 w-4" />
+                      Copied
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="copy"
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 4 }}
+                      className="inline-flex items-center gap-2"
+                    >
+                      <Copy className="h-4 w-4" />
+                      Copy Email
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                href={siteConfig.socialLinks.email}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-black/10 bg-black/5 px-4 py-2.5 text-sm font-semibold text-zinc-800 backdrop-blur transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-100 dark:hover:text-cyan-300 sm:flex-none"
+              >
+                Open Mail App
+                <ArrowUpRight className="h-4 w-4" />
+              </motion.a>
+            </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent opacity-0 transition group-hover:opacity-100"
+            />
+          </motion.div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {contactCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <motion.a
+                  key={card.label}
+                  variants={fadeUp}
+                  whileHover={{ y: -3 }}
+                  href={card.href}
+                  target={card.external ? "_blank" : undefined}
+                  rel={card.external ? "noreferrer" : undefined}
+                  className={`glass group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-black/10 p-3.5 transition hover:border-cyan-400/40 dark:border-white/10 sm:p-4 ${
+                    card.label === "LeetCode" ? "sm:col-span-2" : ""
+                  }`}
+                >
+                  <span
+                    className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br ${card.accent}`}
+                  >
+                    <Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
+                      {card.label}
+                    </span>
+                    <span className="block truncate text-sm font-medium">
+                      {card.value}
+                    </span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 flex-none opacity-0 transition group-hover:opacity-100" />
+                </motion.a>
+              );
+            })}
           </div>
-          <div className="mt-1 truncate text-base font-medium sm:text-lg">
-            {siteConfig.email}
-          </div>
+        </motion.div>
+
+        {/* Right — schedule window */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="glass-strong relative h-full overflow-hidden rounded-3xl border border-black/10 p-5 dark:border-white/10 sm:p-6 lg:sticky lg:top-24"
+        >
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent opacity-0 transition group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(6,182,212,0.08),transparent_40%),linear-gradient(315deg,rgba(20,184,166,0.08),transparent_40%)]"
           />
-        </div>
 
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={copyEmail}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/30 transition"
-          aria-live="polite"
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            {copied ? (
-              <motion.span
-                key="copied"
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                className="inline-flex items-center gap-2"
-              >
-                <Check className="h-4 w-4" />
-                Copied
-              </motion.span>
-            ) : (
-              <motion.span
-                key="copy"
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                className="inline-flex items-center gap-2"
-              >
-                <Copy className="h-4 w-4" />
-                Copy Email
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </motion.button>
-
-        <motion.a
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.97 }}
-          href={siteConfig.socialLinks.email}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl border border-black/10 bg-black/5 px-5 py-3 text-sm font-semibold text-zinc-800 backdrop-blur transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-100 dark:hover:text-cyan-300"
-        >
-          Open Mail App
-          <ArrowUpRight className="h-4 w-4" />
-        </motion.a>
-      </motion.div>
-
-      {/* Contact card grid */}
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {contactCards.map((card) => {
-          const Icon = card.icon;
-          const isSpanning = card.label === "LeetCode";
-          return (
-            <motion.a
-              key={card.label}
-              variants={fadeUp}
-              whileHover={{ y: -3 }}
-              href={card.href}
-              target={card.external ? "_blank" : undefined}
-              rel={card.external ? "noreferrer" : undefined}
-              className={`glass group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-black/10 p-4 transition hover:border-cyan-400/40 dark:border-white/10 ${
-                isSpanning ? "lg:col-span-1" : ""
-              }`}
-            >
-              <span
-                className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br ${card.accent}`}
-              >
-                <Icon className="h-[18px] w-[18px]" />
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-black/10 bg-white/60 px-4 py-3 dark:border-white/10 dark:bg-black/30">
+            <div className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-700 dark:text-cyan-300">
+                <Clock className="h-4 w-4" />
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
-                  {card.label}
-                </span>
-                <span className="block truncate text-sm font-medium">
-                  {card.value}
-                </span>
+              <div className="leading-tight">
+                <div className="font-mono text-lg font-semibold tabular-nums tracking-tight">
+                  {timeString}
+                </div>
+                <div className="text-[11px] text-zinc-500">
+                  {dayString} · IST · {siteConfig.location}
+                </div>
+              </div>
+            </div>
+
+            <StatusPill status={status} />
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300">
+                <CalendarIcon className="h-4 w-4" />
               </span>
-              <ArrowUpRight className="h-4 w-4 flex-none opacity-0 transition group-hover:opacity-100" />
-            </motion.a>
-          );
-        })}
-      </motion.div>
-
-      {/* Availability + clock panel */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        className="glass-strong relative overflow-hidden rounded-3xl border border-black/10 p-5 dark:border-white/10 sm:p-6"
-      >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(135deg,rgba(6,182,212,0.08),transparent_40%),linear-gradient(315deg,rgba(20,184,166,0.08),transparent_40%)]"
-        />
-
-        {/* Clock row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-black/10 bg-white/60 px-4 py-3 dark:border-white/10 dark:bg-black/30">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-700 dark:text-cyan-300">
-              <Clock className="h-4 w-4" />
+              <div className="leading-tight">
+                <div className="text-base font-semibold">Availability</div>
+                <div className="text-[11px] text-zinc-500">
+                  IST (UTC+5:30) · Open to calls
+                </div>
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-400">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
+              Open
             </span>
-            <div className="leading-tight">
-              <div className="font-mono text-lg font-semibold tabular-nums tracking-tight">
-                {timeString}
-              </div>
-              <div className="text-[11px] text-zinc-500">
-                {dayString} · IST (UTC+5:30) · {siteConfig.location}
-              </div>
+          </div>
+
+          <div className="-mx-1 mt-4 overflow-x-auto pb-1">
+            <div className="grid min-w-[340px] grid-cols-7 gap-1.5 px-1 text-center sm:gap-2">
+              {weeklyWithToday.map((day) => (
+                <div
+                  key={day.key}
+                  className={`rounded-xl border p-1.5 transition sm:p-2 ${
+                    day.isToday
+                      ? "border-cyan-400/50 bg-cyan-400/10"
+                      : "border-black/10 bg-black/[0.03] dark:border-white/10 dark:bg-white/[0.03]"
+                  }`}
+                >
+                  <div
+                    className={`mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] ${
+                      day.isToday
+                        ? "text-cyan-700 dark:text-cyan-300"
+                        : "text-zinc-500"
+                    }`}
+                  >
+                    {day.label}
+                  </div>
+                  <div className="flex flex-col items-stretch gap-1.5">
+                    {day.slots.length === 0 ? (
+                      <span className="text-xs text-zinc-600">—</span>
+                    ) : (
+                      day.slots.map((slot) => (
+                        <span
+                          key={slot}
+                          className="rounded-md border border-black/10 bg-white/70 px-1 py-1 font-mono text-[9px] tabular-nums text-zinc-700 transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/5 dark:bg-black/30 dark:text-zinc-200 dark:hover:text-cyan-300 sm:text-[10px]"
+                        >
+                          {slot}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <StatusPill status={status} />
-        </div>
-
-        {/* Availability header */}
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal-700 dark:text-teal-300">
-              <CalendarIcon className="h-4 w-4" />
-            </span>
-            <div className="leading-tight">
-              <div className="text-base font-semibold">Availability</div>
-              <div className="text-[11px] text-zinc-500">
-                IST (UTC+5:30) · Open to calls
-              </div>
-            </div>
-          </div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-400">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
-            Open
-          </span>
-        </div>
-
-        {/* Weekly grid — scroll horizontally on very small screens */}
-        <div className="-mx-1 mt-4 overflow-x-auto pb-1">
-        <div className="grid min-w-[340px] grid-cols-7 gap-2 px-1 text-center">
-          {weeklyWithToday.map((day) => (
-            <div
-              key={day.key}
-              className={`rounded-xl border p-2 transition ${
-                day.isToday
-                  ? "border-cyan-400/50 bg-cyan-400/10"
-                  : "border-black/10 bg-black/[0.03] dark:border-white/10 dark:bg-white/[0.03]"
-              }`}
-            >
-              <div
-                className={`mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                  day.isToday ? "text-cyan-700 dark:text-cyan-300" : "text-zinc-500"
-                }`}
-              >
-                {day.label}
-              </div>
-              <div className="flex flex-col items-stretch gap-1.5">
-                {day.slots.length === 0 ? (
-                  <span className="text-xs text-zinc-600">—</span>
-                ) : (
-                  day.slots.map((slot) => (
-                    <span
-                      key={slot}
-                      className="rounded-md border border-black/10 bg-white/70 px-1.5 py-1 font-mono text-[10px] tabular-nums text-zinc-700 transition hover:border-cyan-400/40 hover:text-cyan-700 dark:border-white/5 dark:bg-black/30 dark:text-zinc-200 dark:hover:text-cyan-300 sm:text-[11px]"
-                    >
-                      {slot}
-                    </span>
-                  ))
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        </div>
-
-        {/* Book a call */}
-        <motion.a
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-          href={bookCallUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-400/20 dark:text-cyan-300"
-        >
-          Book a call
-          <ArrowUpRight className="h-4 w-4" />
-        </motion.a>
-      </motion.div>
+          <motion.a
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            href={bookCallUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 py-3 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-400/20 dark:text-cyan-300"
+          >
+            Book a call
+            <ArrowUpRight className="h-4 w-4" />
+          </motion.a>
+        </motion.div>
+      </div>
 
       {/* Shortcuts footer */}
       <div className="mt-8 flex justify-center">
