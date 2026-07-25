@@ -7,7 +7,7 @@ import { ArrowRight, Download, Menu, X } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { SiLeetcode } from "react-icons/si";
 import { siteConfig } from "@/data/site";
-import { cn, scrollToSection } from "@/lib/utils";
+import { cn, navigateToSection } from "@/lib/utils";
 
 const socialLinks = [
   {
@@ -80,7 +80,7 @@ export function Navbar() {
   }, []);
 
   const handleNav = (href: string) => {
-    scrollToSection(href);
+    navigateToSection(href);
     setActiveId(href);
     setOpen(false);
   };
@@ -231,8 +231,10 @@ export function Navbar() {
       >
         {/* Brand */}
         <button
+          type="button"
           onClick={() => handleNav("#home")}
           className="group flex shrink-0 items-center gap-2"
+          aria-label="Utkarsh Singh — go to home"
         >
           <span className="font-pixel text-sm tracking-tight text-zinc-900 transition group-hover:text-indigo-600 dark:text-zinc-100 dark:group-hover:text-indigo-400">
             utkarsh.exe
