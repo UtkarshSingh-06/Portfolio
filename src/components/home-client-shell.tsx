@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
+import { SplashScreen } from "@/components/effects/splash-screen";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { HeroSection } from "@/components/sections/hero-section";
@@ -31,10 +32,6 @@ const TerminalOverlay = dynamic(
   () => import("@/components/shared/terminal-overlay").then((mod) => mod.TerminalOverlay),
   { ssr: false }
 );
-const SplashScreen = dynamic(
-  () => import("@/components/effects/splash-screen").then((mod) => mod.SplashScreen),
-  { ssr: false }
-);
 
 type Props = {
   /** Server-rendered block (e.g. coding activity) inserted after Skills */
@@ -49,7 +46,7 @@ export function HomeClientShell({ activitySlot }: Props) {
       <CustomCursor />
       <ParticleBackground />
       <Navbar />
-      <main>
+      <main id="main-content">
         <HeroSection />
         <AboutSection />
         <ProjectsSection />
