@@ -53,7 +53,7 @@ export function FloatingDock() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 16, scale: 0.96 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="relative w-[192px] overflow-hidden rounded-xl border border-black/10 bg-white/95 p-3 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)] backdrop-blur-md dark:border-white/10 dark:bg-[#0d1b1e]/95 dark:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
+                className="relative w-[168px] overflow-hidden rounded-lg border border-black/10 bg-white/95 p-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)] backdrop-blur-md dark:border-white/10 dark:bg-[#0d1b1e]/95 dark:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
                 role="complementary"
                 aria-label="Availability status"
               >
@@ -67,24 +67,24 @@ export function FloatingDock() {
                 <button
                   onClick={dismissCard}
                   aria-label="Dismiss availability card"
-                  className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-md text-zinc-500 transition hover:bg-black/5 hover:text-zinc-700 dark:hover:bg-white/5 dark:hover:text-zinc-200"
+                  className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-md text-zinc-500 transition hover:bg-black/5 hover:text-zinc-700 dark:hover:bg-white/5 dark:hover:text-zinc-200"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <X className="h-3 w-3" />
                 </button>
 
                 {/* Availability pill */}
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-emerald-300">
-                  <span className="relative flex h-1.5 w-1.5">
+                <div className="inline-flex items-center gap-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.13em] text-emerald-300">
+                  <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   </span>
                   Available for hiring
                 </div>
 
-                <div className="mt-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                <div className="mt-1.5 text-[13px] font-semibold text-zinc-900 dark:text-zinc-100">
                   Open to opportunities
                 </div>
-                <div className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+                <div className="mt-0.5 text-[10px] text-zinc-500 dark:text-zinc-400">
                   Full Stack · Cloud · DevOps
                 </div>
 
@@ -92,7 +92,7 @@ export function FloatingDock() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={goToContact}
-                  className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-cyan-400 to-teal-500 px-3 py-1.5 text-xs font-semibold text-[#042524] shadow-md shadow-cyan-500/20 transition"
+                  className="mt-2 inline-flex w-full items-center justify-center gap-1 rounded-md bg-gradient-to-r from-cyan-400 to-teal-500 px-2.5 py-1 text-[11px] font-semibold text-[#042524] shadow-md shadow-cyan-500/20 transition"
                 >
                   Let&apos;s talk
                   <span aria-hidden>→</span>
@@ -113,7 +113,7 @@ export function FloatingDock() {
             title="Open terminal (`)"
             className="group flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-white/90 text-teal-700 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15)] backdrop-blur-md transition hover:border-teal-500/40 hover:text-teal-800 dark:border-white/10 dark:bg-[#0d1b1e]/90 dark:text-teal-300 dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)] dark:hover:border-teal-400/40 dark:hover:text-teal-200"
           >
-            <TerminalSquare className="h-5 w-5" />
+            <TerminalSquare className="h-6 w-6" strokeWidth={1.75} />
           </motion.button>
         </div>
     </div>
