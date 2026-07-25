@@ -1,16 +1,19 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/site";
 import { SpotifyWidget } from "@/components/shared/spotify-widget";
+import { navigateToSection } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "About",      href: "#about" },
-  { label: "Projects",   href: "#projects" },
-  { label: "Skills",     href: "#skills" },
-  { label: "Activity",   href: "#activity" },
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "All Projects", href: "/projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Activity", href: "#activity" },
   { label: "Experience", href: "#experience" },
-  { label: "Contact",    href: "#contact" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const SOCIAL_BOXES = [
@@ -27,11 +30,6 @@ const DEV_THOUGHTS = [
   "> Terraform plan looked fine. Terraform apply had other plans.",
   "> docker build && docker pray",
 ];
-
-function scrollToSection(href: string) {
-  const id = href.replace("#", "");
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
 
 function openTerminal() {
   window.dispatchEvent(new Event("portfolio:open-terminal"));
@@ -68,7 +66,7 @@ export function Footer() {
           </div>
 
           <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Full-Stack · Cloud &amp; DevOps Engineer · 3rd Year IT · MUJ ·
+            Full-Stack · Cloud &amp; DevOps Engineer · 4th Year IT · MUJ ·
             Building fast, production-grade systems.
           </p>
 
@@ -94,13 +92,24 @@ export function Footer() {
           <ul className="space-y-2.5">
             {NAV_LINKS.map(({ label, href }) => (
               <li key={label}>
-                <button
-                  onClick={() => scrollToSection(href)}
-                  className="group flex min-h-[44px] items-center gap-1 text-sm text-zinc-600 transition hover:text-cyan-700 dark:text-zinc-400 dark:hover:text-cyan-400"
-                >
-                  <span className="text-zinc-400 transition group-hover:text-cyan-600 dark:text-zinc-600 dark:group-hover:text-cyan-500">&gt;</span>
-                  <span>{label}</span>
-                </button>
+                {href.startsWith("/") ? (
+                  <Link
+                    href={href}
+                    className="group flex min-h-[44px] items-center gap-1 text-sm text-zinc-600 transition hover:text-cyan-700 dark:text-zinc-400 dark:hover:text-cyan-400"
+                  >
+                    <span className="text-zinc-400 transition group-hover:text-cyan-600 dark:text-zinc-600 dark:group-hover:text-cyan-500">&gt;</span>
+                    <span>{label}</span>
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => navigateToSection(href)}
+                    className="group flex min-h-[44px] items-center gap-1 text-sm text-zinc-600 transition hover:text-cyan-700 dark:text-zinc-400 dark:hover:text-cyan-400"
+                  >
+                    <span className="text-zinc-400 transition group-hover:text-cyan-600 dark:text-zinc-600 dark:group-hover:text-cyan-500">&gt;</span>
+                    <span>{label}</span>
+                  </button>
+                )}
               </li>
             ))}
           </ul>
