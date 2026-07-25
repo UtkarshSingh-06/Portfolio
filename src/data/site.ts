@@ -4,8 +4,16 @@ export type NavItem = {
 };
 
 export type Project = {
+  /** URL slug for `/projects/[slug]` — stable, lowercase, hyphenated */
+  slug: string;
   title: string;
   description: string;
+  /** Optional shorter SEO title (falls back to title) */
+  seoTitle?: string;
+  /** Optional meta description (falls back to description) */
+  seoDescription?: string;
+  /** Accessible alt text for project imagery */
+  imageAlt: string;
   tags: string[];
   image: string;
   githubUrl: string;
@@ -30,6 +38,10 @@ export type Experience = {
 export type Certification = {
   title: string;
   issuer: string;
+  /** External verification URL (opens in a new tab) */
+  credentialUrl?: string;
+  /** Quiet academy / learning strip — not shown in the main constellation */
+  academy?: boolean;
 };
 
 export type EducationEntry = {
@@ -70,7 +82,7 @@ export const siteConfig = {
     "B.Tech Information Technology student at Manipal University Jaipur. I build production-grade full-stack products, contribute to open source, and design AI-powered systems that scale.",
   ctaPrimary: "View Projects",
   ctaSecondary: "Contact Me",
-  resumeUrl: "/UTKARSHRESUME.pdf",
+  resumeUrl: "/Resume_.pdf",
   socialLinks: {
     github: "https://github.com/UtkarshSingh-06",
     linkedin: "https://linkedin.com/in/utkarsh-singh06",
@@ -116,41 +128,46 @@ export const aboutHighlights: AboutHighlight[] = [
     icon: "cpu",
     title: "FraudShield AI — UPI fraud detection platform",
     subtitle: "Full-stack risk scoring, WebSocket live monitoring, React analytics dashboard",
-    href: "https://github.com/UtkarshSingh-06/AI-Powered-Payment-Fraud-Detection-System",
+    href: "/projects/fraudshield-ai",
   },
   {
     id: "cqc",
     icon: "cloud",
     title: "Enterprise AI CQC automation framework",
     subtitle: "Drift detection, quality gates, CI/CD, Prometheus/Grafana, Terraform on AWS",
-    href: "https://github.com/UtkarshSingh-06/Enterprise-AI-Continuous-Quality-Control-CQC-Automation-Framework",
+    href: "/projects/enterprise-ai-cqc-framework",
   },
   {
     id: "netscope",
     icon: "activity",
     title: "NetScope — eBPF network observability",
     subtitle: "Kernel-level metrics, Go agents, FastAPI + Next.js control plane, K8s-ready",
-    href: "https://github.com/UtkarshSingh-06/NetScope",
+    href: "/projects/netscope",
   },
   {
     id: "realestate",
     icon: "building",
     title: "Real Estate Booking System",
     subtitle: "FastAPI + MongoDB, React, Stripe, Socket.IO live chat, Google OAuth & Maps",
-    href: "https://github.com/UtkarshSingh-06/Real-Estate-Booking-System",
+    href: "/projects/real-estate-booking-system",
   },
   {
     id: "hackforge",
     icon: "smartphone",
     title: "SubTracker Pro India (Hackforge)",
     subtitle: "Flutter + Firebase subscription tracker for Indian users — INR billing, Razorpay, FCM reminders",
-    href: "https://github.com/UtkarshSingh-06/hackforge",
+    href: "/projects/subtracker-pro-india",
   },
 ];
 
 export const projects: Project[] = [
   {
+    slug: "fraudshield-ai",
     title: "FraudShield AI — UPI Fraud Detection Platform",
+    seoTitle: "FraudShield AI — UPI Fraud Detection Platform",
+    seoDescription:
+      "AI-powered UPI fraud detection with real-time risk scoring, WebSocket alerts, JWT auth, and a React analytics dashboard. Built by Utkarsh Singh.",
+    imageAlt: "FraudShield AI UPI fraud detection platform dashboard preview",
     description:
       "Full-stack fraud prevention for UPI apps: AI risk scoring per transaction, real-time WebSocket alerts, JWT auth, and a React analytics dashboard (Vite + Recharts).",
     tags: ["Node.js", "Express", "React", "WebSocket", "JWT", "Vite"],
@@ -160,7 +177,12 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    slug: "enterprise-ai-cqc-framework",
     title: "Enterprise AI Continuous Quality Control (CQC) Framework",
+    seoTitle: "Enterprise AI CQC Automation Framework",
+    seoDescription:
+      "ML reliability platform with drift detection, quality gates, Prometheus/Grafana, and Terraform on AWS. Enterprise AI Continuous Quality Control by Utkarsh Singh.",
+    imageAlt: "Enterprise AI Continuous Quality Control framework architecture preview",
     description:
       "ML reliability platform: drift detection (PSI/KL), quality gates blocking bad deploys, experiment tracking, synthetic edge-case data, Prometheus metrics, and Terraform-backed AWS deployment.",
     tags: ["Python", "FastAPI", "Docker", "Kubernetes", "Prometheus", "Terraform", "MLflow"],
@@ -170,7 +192,12 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    slug: "netscope",
     title: "NetScope — Network Observability & Security",
+    seoTitle: "NetScope — eBPF Network Observability & Security",
+    seoDescription:
+      "eBPF + Go network observability with FastAPI/Next.js control plane, anomaly detection, and Kubernetes-ready deployment. Built by Utkarsh Singh.",
+    imageAlt: "NetScope network observability and security platform preview",
     description:
       "eBPF + Go observability agents with a FastAPI/Next.js control plane: live traffic metrics, anomaly detection, threat intel enrichment, IDS rules, and Docker/Kubernetes deployment patterns.",
     tags: ["eBPF", "Go", "FastAPI", "Next.js", "Prometheus", "Kubernetes"],
@@ -180,7 +207,12 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    slug: "real-estate-booking-system",
     title: "Real Estate Booking System",
+    seoTitle: "Real Estate Booking System — FastAPI & React",
+    seoDescription:
+      "End-to-end property booking with FastAPI, MongoDB, React, Stripe, Socket.IO chat, and Google OAuth. Full-stack real estate platform by Utkarsh Singh.",
+    imageAlt: "Real estate booking system property discovery UI preview",
     description:
       "End-to-end property discovery and bookings: FastAPI backend, MongoDB, React + Tailwind/shadcn UI, JWT + Google OAuth, Stripe deposits, and Socket.IO messaging between buyers and owners.",
     tags: ["FastAPI", "MongoDB", "React", "Socket.IO", "Stripe", "Google OAuth"],
@@ -190,7 +222,12 @@ export const projects: Project[] = [
     year: "2024",
   },
   {
+    slug: "subtracker-pro-india",
     title: "SubTracker Pro India (Hackforge)",
+    seoTitle: "SubTracker Pro India — Flutter Subscription Tracker",
+    seoDescription:
+      "Flutter + Firebase subscription tracker for Indian users with INR billing, Razorpay, and FCM reminders. Hackforge project by Utkarsh Singh.",
+    imageAlt: "SubTracker Pro India Flutter subscription tracker app preview",
     description:
       "Cross-platform Flutter app for Indian subscription hygiene: Firebase auth & Firestore, renewal reminders (FCM), INR-aware billing cycles, Razorpay, charts, and localization — built for real-world daily use.",
     tags: ["Flutter", "Firebase", "Razorpay", "Riverpod", "Firestore", "FCM"],
@@ -227,6 +264,15 @@ export const skills: Skill[] = [
 
 export const experiences: Experience[] = [
   {
+    role: "SDE Intern",
+    company: "Samsung Electro-Mechanics Bangalore (SEM-B)",
+    period: "Jun 2026 – Present",
+    details: [
+      "Building and shipping software as an SDE Intern on production engineering teams at SEM-B.",
+      "Collaborating with engineers on design, implementation, and delivery of scalable systems.",
+    ],
+  },
+  {
     role: "Student Placement Coordinator",
     company: "Directorate of Corporate Relations & Placements, Manipal University Jaipur",
     period: "Mar 2025 – Present",
@@ -260,6 +306,8 @@ export const certifications: Certification[] = [
   {
     title: "AWS Certified Solutions Architect – Associate (SAA-C03)",
     issuer: "Amazon Web Services",
+    credentialUrl:
+      "https://www.credly.com/badges/e600bac2-926e-4173-9f83-7e51415118ef/public_url",
   },
   { title: "Data Structures and Algorithms", issuer: "NPTEL" },
   { title: "Design and Analysis of Algorithms", issuer: "NPTEL" },
@@ -267,6 +315,11 @@ export const certifications: Certification[] = [
   {
     title: "Red Hat System Administration I & II (RH124, RH134) — RHEL 9.3",
     issuer: "Red Hat",
+  },
+  {
+    title: "Introduction to Cybersecurity",
+    issuer: "Cisco Networking Academy",
+    academy: true,
   },
 ];
 
