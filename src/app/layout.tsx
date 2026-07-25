@@ -1,57 +1,58 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Press_Start_2P, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsScripts } from "@/components/seo/analytics-scripts";
+import { SkipToContent } from "@/components/seo/skip-to-content";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { buildMetadata, buildVerification } from "@/lib/seo/metadata";
+import { getSiteUrl, siteSeo } from "@/lib/seo/site";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  preload: true,
+});
 const pressStart = Press_Start_2P({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-pixel",
+  display: "swap",
+  preload: false, // decorative / infrequent — avoid competing with LCP fonts
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://utkarsh-singh.vercel.app";
+const base = buildMetadata({ path: "/" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(getSiteUrl()),
+  ...base,
   title: {
-    default: "Utkarsh Singh — Full-Stack Developer & AI Enthusiast",
-    template: "%s · Utkarsh Singh",
+    default: siteSeo.title,
+    template: siteSeo.titleTemplate,
   },
-  description:
-    "Utkarsh Singh — Full-Stack Developer & AI Enthusiast. B.Tech IT at Manipal University Jaipur. Building production-grade full-stack products, AI systems, and contributing to open source.",
-  keywords: [
-    "Utkarsh Singh",
-    "Full-Stack Developer",
-    "AI Engineer",
-    "React Developer",
-    "Next.js",
-    "FastAPI",
-    "AWS",
-    "Docker",
-    "Manipal University Jaipur",
-    "Portfolio",
-  ],
-  authors: [{ name: "Utkarsh Singh" }],
-  creator: "Utkarsh Singh",
-  openGraph: {
-    title: "Utkarsh Singh — Full-Stack Developer & AI Enthusiast",
-    description:
-      "Full-Stack Developer & AI Enthusiast. B.Tech IT @ MUJ. Building AI-powered systems, full-stack apps, and contributing to open source.",
-    url: siteUrl,
-    siteName: "Utkarsh Singh",
-    type: "website",
-    locale: "en_IN",
+  applicationName: siteSeo.name,
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Utkarsh Singh — Full-Stack Developer & AI Enthusiast",
-    description:
-      "Full-Stack Developer & AI Enthusiast. B.Tech IT @ MUJ. Building AI-powered systems, full-stack apps, and contributing to open source.",
+  icons: {
+    icon: [{ url: "/icon", type: "image/png" }],
+    apple: [{ url: "/apple-icon", type: "image/png" }],
   },
-  robots: { index: true, follow: true },
+  manifest: "/manifest.webmanifest",
+  verification: buildVerification(),
+  other: {
+    "msapplication-TileColor": siteSeo.themeColor,
+  },
 };
 
 export const viewport: Viewport = {
@@ -59,19 +60,25 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#07090d",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: siteSeo.themeColor },
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+  ],
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
+      lang={siteSeo.language}
       suppressHydrationWarning
       className={`dark ${inter.variable} ${spaceGrotesk.variable} ${pressStart.variable}`}
     >
-      <body>
+      <body className="min-h-dvh antialiased">
+        <SkipToContent />
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
+        <AnalyticsScripts />
       </body>
     </html>
   );
