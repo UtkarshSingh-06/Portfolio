@@ -211,7 +211,7 @@ export function TerminalOverlay() {
           <div className="space-y-1">
             <Line>
               <Accent>resume</Accent> :{" "}
-              <ExtLink href={siteConfig.resumeUrl}>UTKARSHRESUME.pdf</ExtLink>
+              <ExtLink href={siteConfig.resumeUrl}>Resume_.pdf</ExtLink>
             </Line>
             <Line muted>Opening resume in a new tab...</Line>
           </div>
