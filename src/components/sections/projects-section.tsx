@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -15,6 +16,7 @@ import { FaGithub } from "react-icons/fa6";
 import { projectFilters, projects } from "@/data/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { fadeUp, viewportOnce } from "@/lib/animations";
+import { getProjectPath } from "@/lib/seo/projects";
 
 /* ── Per-project visual config ───────────────────────────── */
 type BannerConfig = {
@@ -80,13 +82,11 @@ const DEFAULT_BANNER: BannerConfig = {
 
 function ProjectBanner({
   title,
-  year,
   tags,
   githubUrl,
   liveUrl,
 }: {
   title: string;
-  year?: string | number;
   tags: string[];
   githubUrl: string;
   liveUrl: string;
@@ -138,32 +138,25 @@ function ProjectBanner({
         )}
       </div>
 
-      {/* Year badge */}
-      {year ? (
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-0.5 text-xs font-semibold text-zinc-900 shadow">
-          {year}
-        </span>
-      ) : null}
-
       {/* Action buttons — always visible on mobile, hover-reveal on desktop */}
       <div className="absolute right-3 top-3 flex gap-2 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
         <a
           href={githubUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={`${title} source on GitHub`}
           onClick={(e) => e.stopPropagation()}
-          className="rounded-full bg-white/90 p-2 text-zinc-900 shadow-lg transition hover:scale-110"
+          className="relative z-10 rounded-full bg-white/90 p-2 text-zinc-900 shadow-lg transition hover:scale-110"
         >
           <FaGithub className="h-4 w-4" />
         </a>
         <a
           href={liveUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={`${title} live site`}
           onClick={(e) => e.stopPropagation()}
-          className="rounded-full bg-white/90 p-2 text-zinc-900 shadow-lg transition hover:scale-110"
+          className="relative z-10 rounded-full bg-white/90 p-2 text-zinc-900 shadow-lg transition hover:scale-110"
         >
           <ExternalLink className="h-4 w-4" />
         </a>
@@ -191,13 +184,25 @@ export function ProjectsSection() {
         description="A selection of recent work across AI, full-stack, and systems engineering. Each project blends measurable impact with clean architecture."
       />
 
+      <p className="-mt-8 mb-10 text-sm text-zinc-500">
+        Prefer a dedicated list?{" "}
+        <Link
+          href="/projects"
+          className="font-semibold text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
+        >
+          View all projects
+        </Link>
+      </p>
+
       <div className="mb-10 flex flex-wrap gap-2">
         {projectFilters.map((filter) => {
           const isActive = activeFilter === filter;
           return (
             <button
               key={filter}
+              type="button"
               onClick={() => setActiveFilter(filter)}
+              aria-pressed={isActive}
               className={`relative min-h-[44px] rounded-full px-5 py-2 text-sm font-medium transition ${
                 isActive
                   ? "text-white"
@@ -222,7 +227,7 @@ export function ProjectsSection() {
           {filtered.map((project, idx) => (
             <motion.article
               layout
-              key={project.title}
+              key={project.slug}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -232,7 +237,6 @@ export function ProjectsSection() {
             >
               <ProjectBanner
                 title={project.title}
-                year={project.year}
                 tags={project.tags}
                 githubUrl={project.githubUrl}
                 liveUrl={project.liveUrl}
@@ -240,8 +244,15 @@ export function ProjectsSection() {
 
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <ArrowUpRight className="h-5 w-5 shrink-0 translate-y-0 text-zinc-400 transition group-hover:-translate-y-1 group-hover:text-indigo-500" />
+                  <h3 className="text-lg font-semibold">
+                    <Link
+                      href={getProjectPath(project.slug)}
+                      className="hover:text-indigo-400"
+                    >
+                      {project.title}
+                    </Link>
+                  </h3>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 translate-y-0 text-zinc-400 transition group-hover:-translate-y-1 group-hover:text-indigo-500" aria-hidden />
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                   {project.description}
@@ -256,6 +267,14 @@ export function ProjectsSection() {
                     </span>
                   ))}
                 </div>
+                <p className="mt-4">
+                  <Link
+                    href={getProjectPath(project.slug)}
+                    className="text-sm font-semibold text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
+                  >
+                    View project details →
+                  </Link>
+                </p>
               </div>
             </motion.article>
           ))}
