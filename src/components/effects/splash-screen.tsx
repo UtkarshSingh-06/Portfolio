@@ -25,20 +25,17 @@ const lastLineDelay = (BOOT_LINES.length - 1) * LINE_STEP_MS;
 const FADE_AFTER_MS = lastLineDelay + 260 + HOLD_AFTER_LAST_LINE_MS;
 
 export function SplashScreen() {
-  const [visible, setVisible] = useState(false);
+  // Render immediately (incl. SSR) so boot.sh covers the page on first paint —
+  // never wait for a dynamic import or useEffect to flip visibility on.
   const [visibleLines, setVisibleLines] = useState<number[]>([]);
   const [fading, setFading] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     if (sessionStorage.getItem("splash_shown")) {
       setDone(true);
       return;
     }
-
-    setVisible(true);
 
     const lineTimers = BOOT_LINES.map((_, i) =>
       setTimeout(() => {
@@ -54,7 +51,7 @@ export function SplashScreen() {
     };
   }, []);
 
-  if (done || !visible) return null;
+  if (done) return null;
 
   return (
     <AnimatePresence>
