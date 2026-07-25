@@ -26,7 +26,7 @@ const LC_GRAPHQL = "https://leetcode.com/graphql";
 // These are used when the API is unavailable or returns no data.
 // Update these manually whenever your stats change significantly.
 const FALLBACK_SOLVED: LeetcodeSolved = {
-  total: 170,
+  total: 400,
   easy: 88,
   medium: 53,
   hard: 29,
