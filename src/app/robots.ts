@@ -1,10 +1,20 @@
 import type { MetadataRoute } from "next";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://utkarsh-singh.vercel.app";
+import { projects } from "@/data/site";
+import { getProjectPath } from "@/lib/seo/projects";
+import { getSiteUrl } from "@/lib/seo/site";
 
 export default function robots(): MetadataRoute.Robots {
+  const siteUrl = getSiteUrl();
+
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/api/*"],
+      },
+    ],
     sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
   };
 }
